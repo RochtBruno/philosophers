@@ -6,7 +6,7 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:31:48 by btaveira          #+#    #+#             */
-/*   Updated: 2024/04/23 16:40:11 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:27:56 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef struct s_philo
 	long		nbr_meals;
 	bool		full;
 	long		last_meal_time;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
+	t_fork		*first_fork;
+	t_fork		*second_fork;
 	pthread_t	thread_id;
 	t_table		*table;
 }		t_philo;
@@ -73,5 +73,6 @@ typedef struct s_fork
 /*------------------PROTO----------------------*/
 void	print_error(char	*error);
 void	check_arguments(t_table *table, char **argv);
+void	data_init(t_table *table);
 
 #endif
