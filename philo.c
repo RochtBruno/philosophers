@@ -6,7 +6,7 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:18:13 by btaveira          #+#    #+#             */
-/*   Updated: 2024/04/24 13:42:11 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:50:10 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc,char **argv)
 		//put_input(&table,argv);
 		check_arguments(&table, argv);
 		//printf("philos-> %d\ndie-> %ld\neat-> %ld\nsleep-> %ld\n",table.nbr_philo,table.time_die,table.time_eat,table.time_sleep);
-		//data_init(&table);
+		data_init(&table,argv);
 
 		//start_dinner(&table);
 

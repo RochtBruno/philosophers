@@ -6,13 +6,13 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:29:13 by btaveira          #+#    #+#             */
-/*   Updated: 2024/04/23 16:42:31 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:00:49 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static	char	*valid_input(char *str)
+char	*valid_input(char *str)
 {
 	int		len;
 	char	*nbr;
@@ -34,7 +34,7 @@ static	char	*valid_input(char *str)
 	return (nbr);
 }
 
-static long	ft_atol(char *str)
+long	ft_atoi(char *str)
 {
 	long	res;
 
@@ -52,19 +52,14 @@ static long	ft_atol(char *str)
 
 void	check_arguments(t_table *table, char **argv)
 {
-	table->nbr_philo = ft_atol(argv[1]);
-	table->time_die = ft_atol(argv[2]) * 1000;
-	table->time_eat = ft_atol(argv[3]) * 1000;
-	table->time_sleep = ft_atol(argv[4]) * 1000;
-
-	if(table->nbr_philo < 1)
-		print_error(RED"Put at least 1 philosopher\n");
-	if(table->time_die < 60000
-	|| table->time_eat < 60000
-	|| table->time_sleep < 60000)
+	if((ft_atoi(argv[1]) < 1) || (ft_atoi(argv[1]) > 200))
+		print_error(RED"Put only 1-200 philosophers\n");
+	if(ft_atoi(argv[2]) < 60
+	|| ft_atoi(argv[3]) < 60
+	|| ft_atoi(argv[4]) < 60)
 		print_error(RED"Timestamps needs to be greater than 60\n");
 	if(argv[5])
-		table->meals_limit = ft_atol(argv[5]);
+		table->meals_limit = ft_atoi(argv[5]);
 	else
 		table->meals_limit = -1;
 }
