@@ -6,7 +6,7 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:31:48 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/14 16:26:15 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:52:45 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <limits.h>
-# include <stdbool.h>
 
 /*ERROR MESSAGES COLORS*/
 
@@ -44,17 +43,24 @@ typedef struct s_table
 	long	time_sleep;
 	long	meals_limit;
 	long	start_simulation;
-	bool	end_simulation;
+	long	end_simulation;
+	pthread_mutex_t	mutex_stop;
+	pthread_mutex_t	mutex_print;
+	pthread_mutex_t	mutex_eat;
+	pthread_t	watcher;
 	t_philo	*philos;
 }		t_table;
 
 typedef struct s_philo
 {
-	int			index;
-	int			fork;
+	long		index;
+	long		fork;
 	long		nbr_meals;
-	bool		full;
+	long		full;
 	long		last_meal_time;
+	long		death;
+	long		time_to_death;
+	long		stop;
 	pthread_t	thread_id;
 	pthread_mutex_t		mutex_fork;
 	t_table		*table;
@@ -66,7 +72,14 @@ typedef struct s_philo
 void	print_error(char	*error);
 void	check_arguments(t_table *table, char **argv);
 void	data_init(t_table *table,char **argv);
-long		ft_atoi(char *str);
+void	init_mutexes(t_table *table);
+void	print_action(t_philo *philo, char *action);
+void	init_mutexes(t_table *table);
+long	ft_atoi(char *str);
+long	timestamp(void);
 char	*valid_input(char *str);
+int		is_dead(t_philo *philo);
+int		wait_philo(t_philo *philo, long time_action);
+int		philo_sleep(t_philo *philo);
 
 #endif

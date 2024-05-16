@@ -6,7 +6,7 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:18:13 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/14 14:50:10 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:54:03 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,10 @@ int	main(int argc,char **argv)
 
 	if(argc == 5 || argc == 6)
 	{
-		//start  - check input before putting into table
-		//put_input(&table,argv);
 		check_arguments(&table, argv);
-		//printf("philos-> %d\ndie-> %ld\neat-> %ld\nsleep-> %ld\n",table.nbr_philo,table.time_die,table.time_eat,table.time_sleep);
+		init_mutexes(&table);
 		data_init(&table,argv);
-
 		//start_dinner(&table);
-
 		//leaks - > philos full || 1 philo died
 		//clean_table(&table);
 	}
