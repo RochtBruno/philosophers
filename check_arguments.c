@@ -6,7 +6,7 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:29:13 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/14 15:00:49 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:08:30 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ char	*valid_input(char *str)
 	return (nbr);
 }
 
-long	ft_atoi(char *str)
+int	ft_atoi(char *str)
 {
-	long	res;
+	int	res;
 
 	res = 0;
 	str = valid_input(str);

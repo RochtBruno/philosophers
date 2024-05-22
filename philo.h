@@ -6,7 +6,7 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:31:48 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/16 16:52:45 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:59:05 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,40 +33,44 @@
 
 /*-------------STRUCTS-------------*/
 
-typedef struct s_philo	t_philo;
+typedef struct s_table	t_table;
+
+typedef struct s_philo
+{
+	int		index;
+	int		nbr_fork;
+	int		fork;
+	int		left_fork;
+	int		right_fork;
+	int		nbr_meals;
+	int		full;
+	int		eaten;
+	int		death;
+	int		time_to_death;
+	int		philo_stop;
+	int		philo_died;
+	int		philo_ate;
+	pthread_t	thread_id;
+	pthread_mutex_t		mutex_fork;
+	t_table		*table;
+}		t_philo;
 
 typedef struct s_table
 {
-	long	nbr_philo;
-	long	time_die;
-	long	time_eat;
-	long	time_sleep;
-	long	meals_limit;
-	long	start_simulation;
-	long	end_simulation;
+	int				eaten;
+	int				nbr_philo;
+	int				time_die;
+	int				time_eat;
+	int				time_sleep;
+	int				meals_limit;
+	int				start_simulation;
+	int				end_simulation;
 	pthread_mutex_t	mutex_stop;
 	pthread_mutex_t	mutex_print;
 	pthread_mutex_t	mutex_eat;
 	pthread_t	watcher;
 	t_philo	*philos;
 }		t_table;
-
-typedef struct s_philo
-{
-	long		index;
-	long		fork;
-	long		nbr_meals;
-	long		full;
-	long		last_meal_time;
-	long		death;
-	long		time_to_death;
-	long		stop;
-	pthread_t	thread_id;
-	pthread_mutex_t		mutex_fork;
-	t_table		*table;
-}		t_philo;
-
-
 
 /*------------------PROTO----------------------*/
 void	print_error(char	*error);
@@ -75,11 +79,19 @@ void	data_init(t_table *table,char **argv);
 void	init_mutexes(t_table *table);
 void	print_action(t_philo *philo, char *action);
 void	init_mutexes(t_table *table);
-long	ft_atoi(char *str);
-long	timestamp(void);
+int	return_forks(t_philo *philo,int first_fork,int second_fork);
+void	init_philo(t_table *table);
+void	*routine(void *arg);
+void	*monitor(void *arg);
+int	ft_atoi(char *str);
+int	timestamp(void);
 char	*valid_input(char *str);
 int		is_dead(t_philo *philo);
-int		wait_philo(t_philo *philo, long time_action);
+int		wait_philo(t_philo *philo, int time_action);
 int		philo_sleep(t_philo *philo);
+int		have_eaten(t_philo *philo);
+int		eat_philo(t_philo *philo);
+int		get_forks(t_philo *philo, int *fork_index);
+int		single_fork(t_philo *philo, int fork_index, char *message);
 
 #endif

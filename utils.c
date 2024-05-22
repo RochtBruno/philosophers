@@ -6,7 +6,7 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 14:19:34 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/16 16:43:26 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:09:16 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,16 @@ void	print_error(char	*error)
 	exit(1);
 }
 
-long	timestamp(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time,NULL);
-	return((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
 void	print_action(t_philo *philo, char *action)
 {
-	if(philo->stop == 1 || is_dead(philo))
+	long	ms;
+
+	ms = timestamp() - philo->table->start_simulation;
+	if(philo->philo_stop == 1 || is_dead(philo))
 		return;
 	pthread_mutex_lock(&philo->table->mutex_print);
-	printf("philosopher [%ld] %s\n",philo->index, action);
+	printf("%ld ms ",ms);
+	printf("%d %s\n",philo->index, action);
 	pthread_mutex_unlock(&philo->table->mutex_print);
 }
 

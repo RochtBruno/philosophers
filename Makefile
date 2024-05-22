@@ -4,16 +4,20 @@ CC = cc
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCS = check_arguments.c \
-       data_init.c \
-       philo.c \
-       utils.c \
-	   philo_actions.c
+SRCS = philo.c \
+		check_arguments.c \
+		data_init.c \
+		eat.c \
+		philo_dead.c \
+		sleep.c \
+		time.c \
+		utils.c \
+		start_dinner.c \
 
 OBJS = $(SRCS:.c=.o)
 
 .c.o:
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
 
 all: $(NAME)
 

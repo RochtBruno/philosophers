@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 14:18:13 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/20 15:55:00 by btaveira         ###   ########.fr       */
+/*   Created: 2024/05/20 12:43:34 by btaveira          #+#    #+#             */
+/*   Updated: 2024/05/22 16:08:55 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc,char **argv)
+int	timestamp(void)
 {
-	t_table	table;
+	struct timeval	time;
 
-	if(argc == 5 || argc == 6)
+	gettimeofday(&time,NULL);
+	return((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
+
+int		wait_philo(t_philo *philo, int time_action)
+{
+	int	time_to_wait;
+
+	time_to_wait = timestamp() + time_action;
+	while(time_to_wait > timestamp())
 	{
-		check_arguments(&table, argv);
-		init_mutexes(&table);
-		data_init(&table,argv);
-		//leaks - > philos full || 1 philo died
-		//clean_table(&table);
+		if(is_dead(philo))
+			return (0);
+		usleep(500);
 	}
-	else
-		print_error(RED"INVALID ARGUMENTS\n");
+	return (1);
 }
