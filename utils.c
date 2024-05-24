@@ -5,36 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 14:19:34 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/22 16:09:16 by btaveira         ###   ########.fr       */
+/*   Created: 2024/05/24 13:31:14 by btaveira          #+#    #+#             */
+/*   Updated: 2024/05/24 13:31:17 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_error(char	*error)
+time_t	get_current_time(void)
 {
-	printf(RED"%s\n",error);
-	printf(G"USAGE: <PHILO> <DIE> <EAT> <SLEEP> [LIMIT_MEALS]\n");
-	exit(1);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	print_action(t_philo *philo, char *action)
+time_t	get_formatted_time(time_t start_time)
 {
-	long	ms;
-
-	ms = timestamp() - philo->table->start_simulation;
-	if(philo->philo_stop == 1 || is_dead(philo))
-		return;
-	pthread_mutex_lock(&philo->table->mutex_print);
-	printf("%ld ms ",ms);
-	printf("%d %s\n",philo->index, action);
-	pthread_mutex_unlock(&philo->table->mutex_print);
+	return (get_current_time() - start_time);
 }
 
-void	init_mutexes(t_table *table)
+void	mspleep(time_t time_sleep)
 {
-	pthread_mutex_init(&table->mutex_stop,NULL);
-	pthread_mutex_init(&table->mutex_print,NULL);
-	pthread_mutex_init(&table->mutex_eat,NULL);
+	time_t	time;
+
+	time = get_current_time();
+	while (get_current_time() - time < time_sleep)
+		usleep(100);
+}
+
+int	ft_atoi(char *str)
+{
+	int	res;
+
+	res = 0;
+	str = valid_input(str);
+	while(*str && (*str >= '0' && *str <= '9'))
+	{
+		res = (res * 10) + (*str - '0');
+		str++;
+	}
+	if (res > INT_MAX)
+		print_error(RED"Number too big\n");
+	return (res);
 }

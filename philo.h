@@ -5,22 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 11:31:48 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/22 17:59:05 by btaveira         ###   ########.fr       */
+/*   Created: 2024/05/24 13:31:22 by btaveira          #+#    #+#             */
+/*   Updated: 2024/05/24 13:36:55 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <stdio.h>
 # include <pthread.h>
+# include <stdint.h>
+# include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
+# include <string.h>
 # include <sys/time.h>
+# include <unistd.h>
 # include <limits.h>
-
-/*ERROR MESSAGES COLORS*/
 
 # define RST    "\033[0m"      /* Reset to default color */
 # define RED	"\033[1;31m"   /* Bold Red */
@@ -31,67 +31,60 @@
 # define C      "\033[1;36m"   /* Bold Cyan */
 # define W      "\033[1;37m"   /* Bold White */
 
-/*-------------STRUCTS-------------*/
-
 typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
-	int		index;
-	int		nbr_fork;
-	int		fork;
-	int		left_fork;
-	int		right_fork;
-	int		nbr_meals;
-	int		full;
-	int		eaten;
-	int		death;
-	int		time_to_death;
-	int		philo_stop;
-	int		philo_died;
-	int		philo_ate;
-	pthread_t	thread_id;
-	pthread_mutex_t		mutex_fork;
-	t_table		*table;
-}		t_philo;
+	int					index;
+	time_t				last_time_eat;
+	int					eat_count;
+	t_table				*table;
+	pthread_t			thread;
+}						t_philo;
 
 typedef struct s_table
 {
-	int				eaten;
-	int				nbr_philo;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
-	int				meals_limit;
-	int				start_simulation;
-	int				end_simulation;
-	pthread_mutex_t	mutex_stop;
-	pthread_mutex_t	mutex_print;
-	pthread_mutex_t	mutex_eat;
-	pthread_t	watcher;
-	t_philo	*philos;
-}		t_table;
+	time_t				start_time;
+	int					num_philos;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					philo_must_eat;
+	int					finished_eating;
+	int					finished;
+	t_philo				*philos;
+	pthread_t			watcher;
+	pthread_mutex_t		gate;
+	pthread_mutex_t		*forks;
+}						t_table;
 
-/*------------------PROTO----------------------*/
-void	print_error(char	*error);
-void	check_arguments(t_table *table, char **argv);
-void	data_init(t_table *table,char **argv);
-void	init_mutexes(t_table *table);
-void	print_action(t_philo *philo, char *action);
-void	init_mutexes(t_table *table);
-int	return_forks(t_philo *philo,int first_fork,int second_fork);
-void	init_philo(t_table *table);
-void	*routine(void *arg);
-void	*monitor(void *arg);
-int	ft_atoi(char *str);
-int	timestamp(void);
-char	*valid_input(char *str);
-int		is_dead(t_philo *philo);
-int		wait_philo(t_philo *philo, int time_action);
-int		philo_sleep(t_philo *philo);
-int		have_eaten(t_philo *philo);
-int		eat_philo(t_philo *philo);
-int		get_forks(t_philo *philo, int *fork_index);
-int		single_fork(t_philo *philo, int fork_index, char *message);
+int						create_philos(t_table *table);
+
+// philo operations
+int						philo_think(t_philo *philo_data);
+int						philo_eat(t_philo *philo_data);
+int						philo_sleep(t_philo *philo_data);
+void					create_watcher(t_table *table);
+
+// philo forks
+int						get_first_fork(t_philo *philo);
+int						get_second_fork(t_philo *philo);
+int						get_forks(t_philo *philo, int *forks_pointer);
+int						release_forks(int first_fork, int second_fork,
+							t_philo *philo);
+void					free_forks(pthread_mutex_t *forks, int num_philos);
+
+// time utils
+time_t					get_current_time(void);
+time_t					get_formatted_time(time_t start_time);
+void					mspleep(time_t time);
+
+// utils
+int						check_eat_count(t_philo *philo);
+int						check_if_all_ate(t_table *table);
+int						ft_atoi(char *str);
+char					*valid_input(char *str);
+int						check_arguments(char **argv);
+void					print_error(char	*error);
 
 #endif

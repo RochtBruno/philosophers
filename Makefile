@@ -4,15 +4,18 @@ CC = cc
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCS = philo.c \
-		check_arguments.c \
-		data_init.c \
-		eat.c \
-		philo_dead.c \
-		sleep.c \
-		time.c \
+SRCS =	check_arguments.c \
+		error.c \
+		main.c \
+		forks.c \
+		philo_utils.c \
+		philo.c \
 		utils.c \
-		start_dinner.c \
+		eat.c \
+		sleep.c \
+		think.c \
+		watcher.c
+
 
 OBJS = $(SRCS:.c=.o)
 

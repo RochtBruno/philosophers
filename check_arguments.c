@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 15:29:13 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/22 16:08:30 by btaveira         ###   ########.fr       */
+/*   Created: 2024/05/24 10:24:24 by btaveira          #+#    #+#             */
+/*   Updated: 2024/05/24 12:33:42 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,20 @@ char	*valid_input(char *str)
 	return (nbr);
 }
 
-int	ft_atoi(char *str)
-{
-	int	res;
-
-	res = 0;
-	str = valid_input(str);
-	while(*str && (*str >= '0' && *str <= '9'))
-	{
-		res = (res * 10) + (*str - '0');
-		str++;
-	}
-	if (res > INT_MAX)
-		print_error(RED"Number too big\n");
-	return (res);
-}
-
-void	check_arguments(t_table *table, char **argv)
+int	check_arguments(char **argv)
 {
 	if((ft_atoi(argv[1]) < 1) || (ft_atoi(argv[1]) > 200))
+	{
 		print_error(RED"Put only 1-200 philosophers\n");
+		return (0);
+	}
 	if(ft_atoi(argv[2]) < 60
 	|| ft_atoi(argv[3]) < 60
 	|| ft_atoi(argv[4]) < 60)
+	{
 		print_error(RED"Timestamps needs to be greater than 60\n");
-	if(argv[5])
-		table->meals_limit = ft_atoi(argv[5]);
-	else
-		table->meals_limit = -1;
+		return (0);
+	}
+
+	return (1);
 }
