@@ -6,11 +6,11 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:31:14 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/24 13:31:17 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:30:59 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../Includes/philo.h"
 
 time_t	get_current_time(void)
 {
@@ -40,7 +40,7 @@ int	ft_atoi(char *str)
 
 	res = 0;
 	str = valid_input(str);
-	while(*str && (*str >= '0' && *str <= '9'))
+	while (*str && (*str >= '0' && *str <= '9'))
 	{
 		res = (res * 10) + (*str - '0');
 		str++;

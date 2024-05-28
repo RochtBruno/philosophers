@@ -6,11 +6,11 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 19:14:25 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/24 13:36:18 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:23:53 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../Includes/philo.h"
 
 void	*philo_day(void *arg)
 {

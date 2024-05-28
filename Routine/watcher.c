@@ -6,11 +6,11 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:34:24 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/24 13:35:24 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:31:00 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../Includes/philo.h"
 
 void	*watcher_day(void *arg)
 {

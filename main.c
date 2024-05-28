@@ -6,11 +6,11 @@
 /*   By: btaveira <btaveira@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:12:46 by btaveira          #+#    #+#             */
-/*   Updated: 2024/05/24 13:35:59 by btaveira         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:30:57 by btaveira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "./Includes/philo.h"
 
 int	main(int argc, char **argv)
 {
